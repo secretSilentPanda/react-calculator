@@ -17,11 +17,11 @@ code {
 @tailwind utilities;
 
 button {
-  @apply w-full text-center h-full flex items-center justify-center border-gray-600 cursor-pointer;
+  @apply w-full text-center h-full flex items-center justify-center border-gray-600 cursor-pointer hover:bg-opacity-70 font-thin;
 }
 
 .border-brg {
-  @apply border-r bg-gray-100 border-b;
+  @apply border-r bg-gray-200 border-b;
 }
 
 .container {
@@ -29,5 +29,5 @@ button {
 }
 
 .container-dark {
-  @apply bg-gray-300 border-r border-b;
+  @apply bg-gray-400 border-r border-b;
 }
