@@ -5,7 +5,6 @@ import { operate } from "./functions";
 function App() {
   const [expression, setExpression] = useState([]);
   const [operator, setOperator] = useState("");
-  const [number, setNumber] = useState("");
   const [result, setResult] = useState(0);
   const operators = ["*", "/", "+", "-"];
 
@@ -23,37 +22,42 @@ function App() {
       }, expression[0]);
     }
     setResult(result);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [expression]);
 
   function handleClick(event) {
     const value = event.target.value;
 
-    if (operators.includes(value)) operatorInput(value);
-    else if (value === "=") evaluate();
+    if (operators.includes(value) && expression.length > 0)
+      operatorInput(value);
+    else if (value.match(/[.0-9]/)) numberInput(value);
     else if (value === "clear") clear();
-    else if ((value >= 0 && value < 10) || value === ".")
-      setNumber((prev) => prev + value);
+  }
+
+  function numberInput(value) {
+    const lastElement = expression.slice(-1)[0];
+    if (expression.length < 2) {
+      setExpression((prev) => [prev + value]);
+    } else if (operators.includes(lastElement.slice(-1)[0])) {
+      setExpression((prev) => [...prev, value]);
+    } else if (lastElement.match(/[.0-9]/)) {
+      let temp = [...expression.slice(0, -1), lastElement + value];
+      setExpression(temp);
+    }
   }
 
   function operatorInput(value) {
+    const lastElement = expression.slice(-1)[0];
     setOperator(value);
-    if (number) setExpression([...expression, number, value]);
-    else setExpression([...expression, value]);
-    setNumber("");
-  }
 
-  function evaluate() {
-    setExpression([...expression, number]);
-    setOperator("");
-    setNumber(null);
+    if (operators.includes(lastElement)) {
+      setExpression([...expression.slice(0, -1), value]);
+    } else if (lastElement.match(/[.0-9]/))
+      setExpression([...expression, value]);
   }
 
   function clear() {
     setExpression([]);
     setOperator("");
-    setNumber("");
     setResult(0);
   }
   return (
@@ -62,7 +66,7 @@ function App() {
       operator={operator}
       handleClick={handleClick}
       clear={clear}
-      evaluate={evaluate}
+      expression={expression}
     />
   );
 }

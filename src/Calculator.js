@@ -6,6 +6,7 @@ export default function Calculator({
   evaluate,
   operator,
   result,
+  expression,
 }) {
   return (
     <div className="w-screen h-screen grid place-items-center">
@@ -14,11 +15,11 @@ export default function Calculator({
         style={{ height: "500px" }}
         className="w-80 border border-gray-500 shadow-xl flex flex-col items-center justify-between text-xl font-thin"
       >
-        <div className="bg-gray-900 text-white justify-end pr-2 py-8 w-full flex items-cecnter text-4xl relative">
-          <div className="absolute top-1 right-2 text-sm grid place-items-center">
-            {operator}
-          </div>
+        <div className="bg-gray-900 text-white justify-end pr-2 pb-6 pt-2 w-full flex items-cecnter text-4xl relative">
           {result}
+          <div className="absolute bottom-1 right-2 text-sm grid place-items-center text-gray-300">
+            {expression}
+          </div>
         </div>
         <div className="container">
           <button value="clear" onClick={clear} className="container-dark">
@@ -34,7 +35,7 @@ export default function Calculator({
           </button>
         </div>
         <div className="container">
-          <button value="7" className="border-brg hover:bg-opacity-70">
+          <button value="7" className="border-brg ">
             7
           </button>
           <button value="8" className="border-brg">
@@ -86,18 +87,18 @@ export default function Calculator({
         </div>
         <div className="container">
           <div className="flex items-center justify-center h-full w-full">
-            <button value="0" className="w-full h-full  border-r bg-gray-100">
+            <button value="0" className="w-full h-full border-r bg-gray-200">
               0
             </button>
           </div>
           <div className="flex items-center justify-center h-full w-full">
-            <button value="." className=" border-r bg-gray-100 ">
+            <button value="." className="border-r bg-gray-200 ">
               .
             </button>
             <button
               value="="
               onClick={evaluate}
-              className="bg-yellow-500 text-white  text-2xl "
+              className="bg-yellow-500 text-white text-2xl"
             >
               =
             </button>
